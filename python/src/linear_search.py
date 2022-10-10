@@ -1,3 +1,6 @@
+from typing import (Any, Final, Literal)
+
+
 def locate_card(cards: list[int], query: int) -> int:
     """
     This function with find out card position from the deck of cards
@@ -27,9 +30,10 @@ def locate_card(cards: list[int], query: int) -> int:
             return -1
 
 
-CARDS = (13, 11, 10, 7, 4, 3, 1, 0)
+CARDS: Final[tuple[Literal[13], Literal[11], Literal[10], Literal[7],
+                   Literal[4], Literal[3], Literal[1], Literal[0]]] = (13, 11, 10, 7, 4, 3, 1, 0)
 
-tests = ({
+tests: tuple[dict[str, Any], dict[str, Any], dict[str, Any]] = ({
     'input': {
         'cards': CARDS,
         'query': 7
