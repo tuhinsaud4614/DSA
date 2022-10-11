@@ -1,4 +1,4 @@
-from typing import (Any, Final, Literal)
+from typing import Any, Final, Literal
 
 
 def locate_card(cards: list[int], query: int) -> int:
