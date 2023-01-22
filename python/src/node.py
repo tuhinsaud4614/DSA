@@ -1,6 +1,8 @@
 """
 This is for the node.
 """
+from __future__ import annotations
+
 from typing import Generic, TypeVar
 
 T = TypeVar("T")
@@ -18,9 +20,9 @@ class Node(Generic[T]):
         :param value: The value of the node
         :type value: any
         """
-        self.left = None
-        self._value = value
-        self.right = None
+        self.left: Node[T] | None = None
+        self._value: T = value
+        self.right: Node[T] | None = None
 
     @property
     def value(self) -> T:
@@ -56,9 +58,3 @@ class Node(Generic[T]):
         :return: The name, attack power, and life of the character.
         """
         return f"Value: {self._value}"
-
-
-node = Node(10)
-print(node.value)
-node.value = 20
-print(node)
