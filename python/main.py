@@ -9,4 +9,5 @@ if __name__ == "__main__":
     linked.push(Node(20))
     linked.un_shift(Node(0))
     linked.un_shift(Node(50))
+    #pylint: disable=E1121
     linked.print_all()

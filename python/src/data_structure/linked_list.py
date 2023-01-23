@@ -1,8 +1,7 @@
 """Here we will create a Linked list"""
 
-from __future__ import annotations
-
-from typing import Generic, List, TypeVar
+import json
+from typing import Generic, List, Literal, Optional, TypeVar
 
 from ..node import Node
 
@@ -17,7 +16,7 @@ class LinkedList(Generic[T]):
         Creates an instance of `Linked List`
         :type value: None
         """
-        self._head: Node[T] | None = None
+        self._head: Optional[Node[T]] = None
         self._size = 0
 
     def push(self, new_node: Node[T]) -> None:
@@ -30,7 +29,7 @@ class LinkedList(Generic[T]):
         if not self._head:
             self._head = new_node
             self._size += 1
-            return None
+            return
 
         current = self._head
         while current.right:
@@ -56,13 +55,17 @@ class LinkedList(Generic[T]):
         self._size += 1
         return self._size
 
-    def print_all(self) -> None:
+    def print_all(self, type_as: Literal["nested", "arrow"] = "arrow") -> None:
         """
         This will print all the items in the `Linked List`.
         """
         if not self._head:
             print("No item found!")
-            return None
+            return
+
+        if type_as == "nested":
+            print(json.dumps(self._head.to_object(), indent=2))
+            return
 
         current = self._head
         items: List[T] = []
@@ -73,6 +76,7 @@ class LinkedList(Generic[T]):
             items.append(current.value)
 
         print(" -> ".join(map(str, items)))
+        return
 
     @property
     def size(self) -> int:

@@ -1,9 +1,8 @@
 """
 This is for the node.
 """
-from __future__ import annotations
 
-from typing import Generic, TypeVar
+from typing import Any, Generic, Optional, TypeVar
 
 T = TypeVar("T")
 
@@ -20,9 +19,22 @@ class Node(Generic[T]):
         :param value: The value of the node
         :type value: any
         """
-        self.left: Node[T] | None = None
+        self.left: Optional[Node[T]] = None
         self._value: T = value
-        self.right: Node[T] | None = None
+        self.right: Optional[Node[T]] = None
+
+    def to_object(self) -> dict[str, Any]:
+        """
+        It returns an object that represents the current node and its neighbors.
+        :return: A dictionary with the id of the node, the value of the node, the next node, and the
+        previous node.
+        """
+        return {
+            "id": id(self),
+            "value": self._value,
+            "previous": self.left.to_object() if self.left else None,
+            "next": self.right.to_object() if self.right else None
+        }
 
     @property
     def value(self) -> T:
