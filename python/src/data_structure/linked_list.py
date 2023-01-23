@@ -27,38 +27,40 @@ class LinkedList(Generic[T]):
         :type new_node: Node[T]
         """
 
-        if self._head is None:
+        if not self._head:
             self._head = new_node
             self._size += 1
             return None
 
         current = self._head
-        while current.right is not None:
+        while current.right:
             current = current.right
         current.right = new_node
         self._size += 1
 
-    def un_shift(self, new_node: Node[T]) -> None:
+    def un_shift(self, new_node: Node[T]) -> int:
         """
         Add a node at the start of the `Linked List`
         :param new_node: Node[T]
         :type new_node: Node[T]
+        :return: The size of the `Linked List`
         """
 
-        if self._head is None:
+        if not self._head:
             self._head = new_node
             self._size += 1
-            return None
+            return self._size
 
         new_node.right = self._head
         self._head = new_node
         self._size += 1
+        return self._size
 
     def print_all(self) -> None:
         """
         This will print all the items in the `Linked List`.
         """
-        if self._head is None:
+        if not self._head:
             print("No item found!")
             return None
 
@@ -66,19 +68,11 @@ class LinkedList(Generic[T]):
         items: List[T] = []
         items.append(current.value)
 
-        while current.right is not None:
+        while current.right:
             current = current.right
             items.append(current.value)
 
         print(" -> ".join(map(str, items)))
-
-    @property
-    def head(self) -> Node[T] | None:
-        """
-        The is the `getter` for the `head`.
-        :return: The value of the instance variable `_head`.
-        """
-        return self._head
 
     @property
     def size(self) -> int:
