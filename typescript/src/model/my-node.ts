@@ -1,6 +1,6 @@
-/** Defines a Node */
+import type { NodeObjectType, NotFunction } from "../types";
+import { pseudoMemoryId } from "../utility";
 
-import {  NotFunction } from "./types";
 
 class MyNode<T> {
   /** This is for it's `left` node. This is a private property. */
@@ -18,6 +18,19 @@ class MyNode<T> {
    */
   constructor(value: NotFunction<T>) {
     this.#value = value;
+  }
+
+  /**
+   * It returns an object that represents the current node and its neighbors
+   * @returns A node object with the value, next and previous properties.
+   */
+  toObject(): NodeObjectType<T> {
+    return {
+      id: pseudoMemoryId(),
+      value: this.#value,
+      next: this.#right?.toObject(),
+      previous: this.#left?.toObject()
+    };
   }
 
   /**

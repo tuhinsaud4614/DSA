@@ -1,4 +1,4 @@
-import { Primitive } from "./types";
+import { Primitive } from "types";
 
 const CARDS = [13, 11, 10, 7, 4, 3, 1, 0];
 
