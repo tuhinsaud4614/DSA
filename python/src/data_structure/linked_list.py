@@ -3,7 +3,7 @@
 import json
 from typing import Generic, List, Literal, Optional, TypeVar
 
-from ..node import Node
+from ..model.node import Node
 
 T = TypeVar("T")
 
@@ -55,6 +55,37 @@ class LinkedList(Generic[T]):
         self._size += 1
         return self._size
 
+    def pop(self) -> Optional[T]:
+        """
+        Remove the last node of the `Linked List`.
+        :return: The last value in the list
+        """
+        if not self._head:
+            return None
+
+        current = self._head
+        while current.right:
+            if not current.right.right:
+                value = current.right.value
+                current.right = None
+                return value
+
+            current = current.right
+        return None
+
+    def shift(self) -> Optional[T]:
+        """
+        Remove the first node of the `Linked List`.
+        :return: The first value in the list
+        """
+        if not self._head:
+            return None
+
+        value = self._head.value
+        self._head = self._head.right
+
+        return value
+
     def print_all(self, type_as: Literal["nested", "arrow"] = "arrow") -> None:
         """
         This will print all the items in the `Linked List`.
@@ -75,7 +106,7 @@ class LinkedList(Generic[T]):
             current = current.right
             items.append(current.value)
 
-        print(" -> ".join(map(str, items)))
+        print("List: ", " -> ".join(map(str, items)))
         return
 
     @property
