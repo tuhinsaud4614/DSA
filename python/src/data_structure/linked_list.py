@@ -71,7 +71,9 @@ class LinkedList(Generic[T]):
                 return value
 
             current = current.right
-        return None
+
+        self._head = None
+        return current.value
 
     def shift(self) -> Optional[T]:
         """
