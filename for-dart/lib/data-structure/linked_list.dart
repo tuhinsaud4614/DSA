@@ -49,6 +49,43 @@ class LinkedList<T> {
     return ++size;
   }
 
+  /// Remove the last node of the `Linked List`.
+  ///
+  /// Returns:
+  ///   The last value in the linked list.
+  T? pop() {
+    if (head == null) {
+      return null;
+    }
+
+    var current = head;
+    while (current != null && current.next != null) {
+      if (current.next?.next == null) {
+        final value = current.next?.value;
+        current.next = null;
+        return value;
+      }
+      current = current.next;
+    }
+    head = null;
+    return current?.value;
+  }
+
+  /// Remove the first node of the `Linked List`.
+  ///
+  /// Returns:
+  ///   The first value in the list
+  T? shift() {
+    if (head == null) {
+      return null;
+    }
+
+    final value = head?.value;
+    head = head?.next;
+
+    return value;
+  }
+
   /// Print all the items of the `LinkedList`.
   ///
   /// Args:
@@ -57,7 +94,7 @@ class LinkedList<T> {
   ///
   /// Returns:
   ///   A list of all the values in the linked list.
-  printAll([PrintType type = PrintType.arrow]) {
+  void printAll([PrintType type = PrintType.arrow]) {
     if (head == null) {
       print("The linked list is empty");
       return;
@@ -65,7 +102,7 @@ class LinkedList<T> {
 
     if (type == PrintType.nested) {
       var encoder = JsonEncoder.withIndent("  ");
-      print(encoder.convert(head?.toObject()));
+      print("List: ${encoder.convert(head?.toObject())}");
       return;
     }
 
@@ -82,6 +119,6 @@ class LinkedList<T> {
         }
       }
     }
-    print(list.join(" -> "));
+    print('List: ${list.join(" -> ")}');
   }
 }
