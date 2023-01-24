@@ -61,8 +61,8 @@ export default class LinkedList<T> {
 
       current = current.right;
     }
-
-    return undefined;
+    this.#head = undefined;
+    return current.value;
   }
 
   /**
