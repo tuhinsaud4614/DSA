@@ -42,17 +42,57 @@ export default class LinkedList<T> {
   }
 
   /**
+   * Remove the last node of the `Linked List`.
+   * @returns The last value in the list.
+   */
+  pop(): T | undefined {
+    if (!this.#head) {
+      return undefined;
+    }
+
+    let current = this.#head;
+
+    while (current.right) {
+      if (!current.right.right) {
+        const value = current.right.value;
+        current.right = null;
+        return value;
+      }
+
+      current = current.right;
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Remove the first node of the `Linked List`.
+   * @returns The first value in the list
+   */
+  shift(): T | undefined {
+    if (!this.#head) {
+      return undefined;
+    }
+
+    const value = this.#head.value;
+    this.#head = this.#head.right || undefined;
+    return value;
+  }
+
+  /**
    * Print all the items of the `LinkedList`.
    * @param {"nested" | "arrow"} [type=arrow] - "nested" | "arrow" = "arrow"
    * @returns The values of the linked list.
    */
   printAll(type: "nested" | "arrow" = "arrow") {
     if (!this.#head) {
-      return "The linked list is empty";
+      console.log("The linked list is empty");
+      return;
     }
 
     if (type === "nested") {
-      return JSON.stringify(this.#head.toObject(), null, 2);
+      console.log(JSON.stringify(this.#head.toObject(), null, 2));
+      return;
     }
 
     const list: T[] = [];
@@ -63,8 +103,7 @@ export default class LinkedList<T> {
       current = current.right;
       list.push(current.value);
     }
-
-    return list.join(" -> ");
+    console.log("List: ", list.join(" -> "));
   }
 
   /**
