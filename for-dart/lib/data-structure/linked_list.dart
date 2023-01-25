@@ -21,12 +21,12 @@ class LinkedList<T> {
       return ++size;
     }
 
-    Node<T>? current = head;
+    var current = head;
 
-    while (current?.next != null) {
-      current = current?.next;
+    while (current!.next != null) {
+      current = current.next;
     }
-    current?.next = newNode;
+    current.next = newNode;
 
     return ++size;
   }
@@ -60,15 +60,15 @@ class LinkedList<T> {
 
     var current = head;
     while (current != null && current.next != null) {
-      if (current.next?.next == null) {
-        final value = current.next?.value;
+      if (current.next!.next == null) {
+        final value = current.next!.value;
         current.next = null;
         return value;
       }
       current = current.next;
     }
     head = null;
-    return current?.value;
+    return current!.value;
   }
 
   /// Remove the first node of the `Linked List`.
@@ -80,8 +80,8 @@ class LinkedList<T> {
       return null;
     }
 
-    final value = head?.value;
-    head = head?.next;
+    final value = head!.value;
+    head = head!.next;
 
     return value;
   }
@@ -112,8 +112,8 @@ class LinkedList<T> {
     if (current != null) {
       list.add(current.value);
 
-      while (current?.next != null) {
-        current = current?.next;
+      while (current!.next != null) {
+        current = current.next;
         if (current != null) {
           list.add(current.value);
         }
