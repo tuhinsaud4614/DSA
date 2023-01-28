@@ -1,14 +1,19 @@
 import { LinkedList } from "data-structure";
-import { MyNode } from "model";
 
 const linkedList = new LinkedList();
-linkedList.push(new MyNode(10));
-linkedList.push(new MyNode(20));
-// linkedList.push(new MyNode(30));
-// linkedList.unshift(new MyNode(0));
-// linkedList.unshift(new MyNode(50));
+linkedList.push(10);
+linkedList.push(20);
+linkedList.push(30);
+linkedList.unshift(0);
+linkedList.unshift(50);
 linkedList.printAll();
-// console.log("Pop:", linkedList.pop());
-// linkedList.printAll();
+console.log("Pop:", linkedList.pop());
+linkedList.printAll();
+console.log(linkedList.size);
+
 console.log("Shift:", linkedList.shift());
 linkedList.printAll();
+linkedList.insertAt(100, 0);
+linkedList.printAll();
+console.log(linkedList.size);
+

@@ -1,4 +1,5 @@
 import { MyNode } from "model";
+import { NotFunction } from "types";
 
 export default class LinkedList<T> {
   #head?: MyNode<T> = undefined;
@@ -6,10 +7,12 @@ export default class LinkedList<T> {
 
   /**
    * Add a node at the end of the `Linked List`.
-   * @param newNode - MyNode<T> - This is the node that we want to add to the end of the list.
+   * @param data - NotFunction<T> - This is the node that we want to add to the end of the list.
    * @returns The size of the list
    */
-  push(newNode: MyNode<T>) {
+  push(data: NotFunction<T>) {
+    const newNode = new MyNode(data);
+
     if (!this.#head) {
       this.#head = newNode;
       return ++this.#size;
@@ -27,10 +30,12 @@ export default class LinkedList<T> {
 
   /**
    * Add a node at the start of the `Linked List`.
-   * @param newNode - MyNode<T>
+   * @param data - NotFunction<T>
    * @returns The size of the list
    */
-  unshift(newNode: MyNode<T>) {
+  unshift(data: NotFunction<T>) {
+    const newNode = new MyNode(data);
+
     if (!this.#head) {
       this.#head = newNode;
       return ++this.#size;
@@ -56,12 +61,14 @@ export default class LinkedList<T> {
       if (!current.right.right) {
         const value = current.right.value;
         current.right = null;
+        this.#size--;
         return value;
       }
 
       current = current.right;
     }
     this.#head = undefined;
+    this.#size--;
     return current.value;
   }
 
@@ -76,7 +83,42 @@ export default class LinkedList<T> {
 
     const value = this.#head.value;
     this.#head = this.#head.right || undefined;
+    this.#size--;
     return value;
+  }
+
+  /**
+   * It inserts data at a given position.
+   * @param data - The data to be inserted.
+   * @param {number} position - The position in the `LinkedList` to insert the data.
+   */
+  insertAt(data: NotFunction<T>, position: number) {
+    if (position > this.#size || position < 0) {
+      return;
+    }
+
+    const newNode = new MyNode(data);
+
+    if (!this.#head || position === 0) {
+      if (position === 0) {
+        newNode.right = this.#head || null;
+      }
+
+      this.#head = newNode;
+      this.#size++;
+      return;
+    }
+
+    let current = this.#head;
+    let count = 0;
+    while (count < position - 1 && current.right) {
+      count += 1;
+      current = current.right;
+    }
+
+    newNode.right = current.right;
+    current.right = newNode;
+    this.#size++;
   }
 
   /**
