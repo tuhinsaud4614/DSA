@@ -19,7 +19,7 @@ class LinkedList(Generic[T]):
         self._head: Optional[Node[T]] = None
         self._size = 0
 
-    def push(self, data: T) -> None:
+    def push(self, data: T) -> int:
         """
         Add a node at the end of the `Linked List`
         :param data: T
@@ -30,13 +30,14 @@ class LinkedList(Generic[T]):
         if not self._head:
             self._head = new_node
             self._size += 1
-            return
+            return self._size
 
         current = self._head
         while current.right:
             current = current.right
         current.right = new_node
         self._size += 1
+        return self._size
 
     def un_shift(self, data: T) -> int:
         """
@@ -95,7 +96,7 @@ class LinkedList(Generic[T]):
 
     def insert_at(self, data: T, position: int) -> None:
         """
-        It inserts data at a given index.
+        It inserts data at a given position.
 
         :param data: The data to insert into the list
         :type data: T
