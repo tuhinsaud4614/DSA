@@ -19,13 +19,14 @@ class LinkedList(Generic[T]):
         self._head: Optional[Node[T]] = None
         self._size = 0
 
-    def push(self, new_node: Node[T]) -> None:
+    def push(self, data: T) -> None:
         """
         Add a node at the end of the `Linked List`
-        :param new_node: Node[T]
-        :type new_node: Node[T]
+        :param data: T
+        :type data: T
         """
 
+        new_node = Node(data)
         if not self._head:
             self._head = new_node
             self._size += 1
@@ -37,14 +38,15 @@ class LinkedList(Generic[T]):
         current.right = new_node
         self._size += 1
 
-    def un_shift(self, new_node: Node[T]) -> int:
+    def un_shift(self, data: T) -> int:
         """
         Add a node at the start of the `Linked List`
-        :param new_node: Node[T]
-        :type new_node: Node[T]
+        :param data: T
+        :type data: T
         :return: The size of the `Linked List`
         """
 
+        new_node = Node(data)
         if not self._head:
             self._head = new_node
             self._size += 1
@@ -68,11 +70,13 @@ class LinkedList(Generic[T]):
             if not current.right.right:
                 value = current.right.value
                 current.right = None
+                self._size -= 1
                 return value
 
             current = current.right
 
         self._head = None
+        self._size -= 1
         return current.value
 
     def shift(self) -> Optional[T]:
@@ -85,8 +89,42 @@ class LinkedList(Generic[T]):
 
         value = self._head.value
         self._head = self._head.right
+        self._size -= 1
 
         return value
+
+    def insert_at(self, data: T, position: int) -> None:
+        """
+        It inserts data at a given index.
+
+        :param data: The data to insert into the list
+        :type data: T
+        :param position: the position of the data to insert
+        :type position: int
+        :return: None
+        """
+
+        if not self._size >= position >= 0:
+            return
+
+        new_node = Node(data)
+
+        if not self._head or position == 0:
+            if position == 0:
+                new_node.right = self._head
+            self._head = new_node
+            self._size += 1
+            return
+
+        current = self._head
+        count = 0
+        while count < position - 1 and current.right:
+            count += 1
+            current = current.right
+
+        new_node.right = current.right
+        current.right = new_node
+        self._size += 1
 
     def print_all(self, type_as: Literal["nested", "arrow"] = "arrow") -> None:
         """
