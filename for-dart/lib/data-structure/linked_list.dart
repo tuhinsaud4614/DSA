@@ -8,14 +8,16 @@ class LinkedList<T> {
   Node<T>? head;
   int size = 0;
 
-  /// Add a node at the end of the `Linked List`.
+  /// Add the data at the end of the `Linked List`.
   ///
   /// Args:
-  ///   newNode (Node<T>): The new node to be added to the list.
+  ///   data (T): The new data to be added to the list.
   ///
   /// Returns:
   ///   The size of the list.
-  int push(Node<T> newNode) {
+  int push(T data) {
+    final newNode = Node(value: data);
+
     if (head == null) {
       head = newNode;
       return ++size;
@@ -31,14 +33,16 @@ class LinkedList<T> {
     return ++size;
   }
 
-  /// Add a node at the start of the `Linked List`.
+  /// Add the data at the start of the `Linked List`.
   ///
   /// Args:
-  ///   newNode (Node<T>): The node that we want to add to the beginning of the list.
+  ///   data (T): The data that we want to add to the beginning of the list.
   ///
   /// Returns:
   ///   The size of the list
-  int unShift(Node<T> newNode) {
+  int unShift(T data) {
+    final newNode = Node(value: data);
+
     if (head == null) {
       head = newNode;
       return ++size;
@@ -63,11 +67,13 @@ class LinkedList<T> {
       if (current.next!.next == null) {
         final value = current.next!.value;
         current.next = null;
+        --size;
         return value;
       }
       current = current.next;
     }
     head = null;
+    --size;
     return current!.value;
   }
 
@@ -82,8 +88,44 @@ class LinkedList<T> {
 
     final value = head!.value;
     head = head!.next;
-
+    --size;
     return value;
+  }
+
+  /// It inserts data at a given position.
+  ///
+  /// Args:
+  ///   data (T): The data to be inserted.
+  ///   position (int): The position where the new node should be inserted.
+  ///
+  void insertAt(T data, int position) {
+    if (position > size || position < 0) {
+      return;
+    }
+
+    final newNode = Node(value: data);
+
+    if (head == null || position == 0) {
+      if (position == 0) {
+        newNode.next = head;
+      }
+
+      head = newNode;
+      ++size;
+      return;
+    }
+
+    var current = head;
+    var count = 0;
+
+    while (count < position - 1 && current?.next != null) {
+      count += 1;
+      current = current!.next;
+    }
+
+    newNode.next = current?.next;
+    current?.next = newNode;
+    ++size;
   }
 
   /// Print all the items of the `LinkedList`.
